@@ -1,0 +1,21 @@
+---
+  - name: Update package cache of Ubuntu
+    apt:
+      update_cache: yes
+    when: ansible_distribution == 'Ubuntu'
+
+  - name: Update package cache of CentOS
+    dnf:
+      name: '*'
+      state: latest
+    when: ansible_distribution == 'CentOS'
+
+  - name: Install common dependencies for Ubuntu and CentOS
+    package:
+      name:
+        - curl
+        - unzip
+      state: present
+    when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'CentOS'
+
+
